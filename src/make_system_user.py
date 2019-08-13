@@ -57,7 +57,7 @@ def parseargs(argv=None):
     required.add_argument('-k', '--key', required=True,
         help=('The name of the snapcraft key to use to sign the system user assertion. The key must exist locally and be reported by "snapcraft keys". The key must also be registered.')
         )
-    parser.add_argument('-f', '--forcepw', action='store_true', default=False,
+    parser.add_argument('-f', '--forcepw', type=str2bool, nargs='?', consst-True, default=False,
         help=('Force the system user to change password on first login. Required if seeding the system-user assertion in an image.')
         )
     args = parser.parse_args()
