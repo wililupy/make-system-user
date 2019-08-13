@@ -19,10 +19,10 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='make-system-user',
-    version='6',
+    version='9',
     description='make-system-user creates system user assertion files for Ubuntu Core',
     long_description=readmeDescription,
-    url='https://github.com/knitzsche/make-system-user',
+    url='https://github.com/wililupy/make-system-user',
     packages=["make_system_user"],
     install_requires=['snapcraft'],
     entry_points={
@@ -31,7 +31,7 @@ setup(
         ],
     },
     project_urls={
-        'Bug Reports': 'https://github.com/knitzsche/make-system-user/issues',
-        'Source': 'https://github.com/knitzsche/make-system-user',
+        'Bug Reports': 'https://github.com/wililupy/make-system-user/issues',
+        'Source': 'https://github.com/wililupy/make-system-user',
     },
 )
