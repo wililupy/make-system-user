@@ -57,9 +57,9 @@ def parseargs(argv=None):
     required.add_argument('-k', '--key', required=True,
         help=('The name of the snapcraft key to use to sign the system user assertion. The key must exist locally and be reported by "snapcraft keys". The key must also be registered.')
         )
-    parser.add_argument('-f', '--forcepw', action='store_true', default=False
-	help=('Force the system user to change password on first login. Required if seeding the system-user assertion in an image.')
-	)
+    parser.add_argument('-f', '--forcepw', action='store_true', default=False,
+        help=('Force the system user to change password on first login. Required if seeding the system-user assertion in an image.')
+        )
     args = parser.parse_args()
     return args
 
@@ -101,7 +101,7 @@ def accountKeyAssert(id):
         return False
     return(signed)
 
-def systemUserJson(account, brand, model, username):
+def systemUserJson(account, brand, model, username, forcepw):
     data = dict()
     data["type"] = "system-user"
     data["authority-id"] = account
@@ -173,7 +173,7 @@ def main(argv=None):
         print("Brand ", args.brand)
         print("Model", args.model)
         print("Username", args.username)
-	print("ForcePasswordChange", args.forcepw)
+        print("ForcePasswordChange", args.forcepw)
         print("Password", args.password)
         print("SSH", args.ssh_keys)
         print("Password", args.password)
@@ -192,7 +192,7 @@ def main(argv=None):
         print("==== Account Key signed:")
         print(accountKeySigned)
     
-    userJson = systemUserJson(account['account_id'], args.brand, args.model, args.username )
+    userJson = systemUserJson(account['account_id'], args.brand, args.model, args.username, args.forcepw )
     if args.password:
         userJson["password"] = pword_hash(args.password)
     else: #ssh pub key
