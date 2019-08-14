@@ -57,7 +57,7 @@ def parseargs(argv=None):
     required.add_argument('-k', '--key', required=True,
         help=('The name of the snapcraft key to use to sign the system user assertion. The key must exist locally and be reported by "snapcraft keys". The key must also be registered.')
         )
-    parser.add_argument('-f', '--forcepasswordchange', action='store_true', default=False,
+    parser.add_argument('-f', '--forcepwch', dest='forcepwch', action='store_true', default=False,
         help=('Force the system user to change password on first login. Required if seeding the system-user assertion in an image.')
         )
     args = parser.parse_args()
@@ -101,7 +101,7 @@ def accountKeyAssert(id):
         return False
     return(signed)
 
-def systemUserJson(account, brand, model, username, forcepasswordchange):
+def systemUserJson(account, brand, model, username, forcepwch):
     data = dict()
     data["type"] = "system-user"
     data["authority-id"] = account
@@ -112,7 +112,7 @@ def systemUserJson(account, brand, model, username, forcepasswordchange):
     data["username"] = username
     data["email"] = "{}@localhost".format(username)
     data["revision"] = "1"
-    data["forcepasswordchange"] = forcepasswordchange
+    data["forcepasswordchange"] = forcepwch
 
     ts = time.time()
     dt = datetime.fromtimestamp(ts)
@@ -171,7 +171,7 @@ def main(argv=None):
         print("Brand ", args.brand)
         print("Model", args.model)
         print("Username", args.username)
-        print("ForcePasswordChange", args.forcepasswordchange)
+        print("ForcePasswordChange", args.forcepwch)
         print("Password", args.password)
         print("SSH", args.ssh_keys)
         print("Password", args.password)
@@ -190,7 +190,7 @@ def main(argv=None):
         print("==== Account Key signed:")
         print(accountKeySigned)
     
-    userJson = systemUserJson(account['account_id'], args.brand, args.model, args.username, args.forcepasswordchange )
+    userJson = systemUserJson(account['account_id'], args.brand, args.model, args.username, args.forcepwch )
     if args.password:
         userJson["password"] = pword_hash(args.password)
     else: #ssh pub key
